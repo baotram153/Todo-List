@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Hello World{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+    <h1>Tasks</h1>
+    <div class="container">
+        <form method="POST">
+            <input type="text" name="content" placeholder="Enter task here">
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.date_created }}</td>
+                <td>{{ "done" if task.completed else "not done" }}</td>
+                <td>
+                    <!-- <a href="/delete/{{ task.id }}">Delete</a> -->
+                    <button onclick="location.href = '/delete/{{ task.id }}'">Delete</button>
+                    <!-- <a href="/edit/{{ task.id }}">Edit</a> -->
+                    <button onclick="location.href = '/edit/{{ task.id }}'">Edit</button>
+                </td>
+                <td>
+                    <form action="/complete/{{ task.id }}" method="POST">
+                        <button type="submit">Complete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>  
+    </table>
+{% endblock %}
